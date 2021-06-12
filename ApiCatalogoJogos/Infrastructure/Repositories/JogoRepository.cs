@@ -27,7 +27,7 @@ namespace ApiCatalogoJogos.Infrastructure.Repositories
             // Nao Implementado
         }
 
-        public Task<Jogo> Inserir(Jogo jogo)
+        public Task Inserir(Jogo jogo)
         {
             jogos.Add(jogo.Id, jogo);
             return Task.FromResult(jogos[jogo.Id]);
@@ -49,19 +49,6 @@ namespace ApiCatalogoJogos.Infrastructure.Repositories
         public Task<List<Jogo>> Obter(string nome, string produtora)
         {
             return Task.FromResult(jogos.Values.Where(jogo => jogo.Nome.Equals(nome) && jogo.Produtora.Equals(produtora)).ToList());
-        }
-
-        public Task<List<Jogo>> ObterSemLambda(string nome, string produtora)
-        {
-            var retorno = new List<Jogo>();
-
-            foreach(var jogo in jogos.Values)
-            {
-                if (jogo.Nome.Equals(nome) && jogo.Produtora.Equals(produtora))
-                    retorno.Add(jogo);
-            }
-
-            return Task.FromResult(retorno);
         }
 
         public Task Remover(Guid id)

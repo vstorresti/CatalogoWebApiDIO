@@ -60,7 +60,9 @@ namespace ApiCatalogoJogos.Services
                     Preco = jogo.Preco
                 };
 
-            var jogoInserido = await _jogoRepository.Inserir(jogoInsert);
+            await _jogoRepository.Inserir(jogoInsert);
+
+            var jogoInserido = await _jogoRepository.Obter(jogoInsert.Id);
 
             return new JogoViewModel
             {
