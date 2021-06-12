@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using ApiCatalogoJogos.Entities.Exceptions;
 using ApiCatalogoJogos.InputModel;
 using ApiCatalogoJogos.Services.Interfaces;
 using ApiCatalogoJogos.ViewModel;
@@ -53,9 +54,9 @@ namespace ApiCatalogoJogos.Controllers.V1
                 return Ok(jogo);
             }
             //catch (JogoJaCadastradoException ex)
-            catch(Exception ex)
+            catch(JogoJaCadastradoException ex)
             {
-                return UnprocessableEntity("Já existe um jogo com este nome para esta produtora");
+                return UnprocessableEntity(ex.Message);
             }
         }
 
@@ -68,9 +69,9 @@ namespace ApiCatalogoJogos.Controllers.V1
                 await _jogoService.Atualizar(idJogo, jogo);
                 return Ok();
             }
-            catch(Exception ex)
+            catch(JogoNaoCadastradoException ex)
             {
-                return NotFound("Não existe jogo");
+                return NotFound(ex.Message);
             }
         }
 
@@ -83,9 +84,9 @@ namespace ApiCatalogoJogos.Controllers.V1
                 await _jogoService.Atualizar(idJogo, preco);
                 return Ok();
             }
-            catch (Exception ex)
+            catch (JogoNaoCadastradoException ex)
             {
-                return NotFound("Não existe este jogo");
+                return NotFound(ex.Message);
             }
         }
 
@@ -97,9 +98,9 @@ namespace ApiCatalogoJogos.Controllers.V1
                 await _jogoService.Remover(idJogo);
                 return Ok();
             }
-            catch (Exception ex)
+            catch (JogoNaoCadastradoException ex)
             {
-                return NotFound("Não existe este jogo");
+                return NotFound(ex.Message);
             }
         }
     }
